@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg width="300mm" height="300mm" viewBox="0 0 300 300" version="1.1" id="svg1778" sodipodi:docname="Star.svg" inkscape:version="1.2.2 (b0a84865, 2022-12-01)" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview id="namedview1780" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" showgrid="true" inkscape:zoom="0.37191818" inkscape:cx="-98.139865" inkscape:cy="700.42287" inkscape:current-layer="layer1" showguides="true" inkscape:lockguides="true">
+    <inkscape:grid type="xygrid" id="grid2262" spacingx="0.99999999" spacingy="0.99999999" empspacing="10" originx="0" originy="300" />
+  </sodipodi:namedview>
+  <defs id="defs1775" />
+  <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1">
+    <path sodipodi:type="star" style="vector-effect:non-scaling-stroke;fill:#f9f9f9;stroke:#ff0000;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:hairline" id="path288" inkscape:flatsided="false" sodipodi:sides="6" sodipodi:cx="40" sodipodi:cy="260" sodipodi:r1="28.284269" sodipodi:r2="14.142137" sodipodi:arg1="2.3561945" sodipodi:arg2="2.8797933" inkscape:rounded="0" inkscape:randomized="0" d="M 20.000001,280 26.339745,263.66025 12.679494,252.67949 30,250 32.679493,232.67949 43.660255,246.33975 59.999999,240 53.660255,256.33975 67.320506,267.32051 50,270 47.320507,287.32051 36.339745,273.66025 Z" inkscape:transform-center-y="-3.2755905e-06" />
+  </g>
+</svg>
