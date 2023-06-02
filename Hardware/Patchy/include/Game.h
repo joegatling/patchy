@@ -2,29 +2,37 @@
 #include <Arduino.h>
 #include <NeoPixelBusLg.h>
 
+#include "CircularBuffer.h"
+
 #include "Patchboard.h"
+
+#define MAX_CONNECTIONS 12
 
 class Game
 {
 public:
-    Game(int rows, int columns, NeoPixelBusLg<NeoGrbFeature, Neo800KbpsMethod> strip);
+    static Game* GetInstance();
 
-    void Initialize();
+    void Initialize(int rows, int columns, NeoPixelBusLg<NeoGrbFeature, Neo800KbpsMethod> strip, Patchboard patchboard);
     void Update();
 
     void BeginGame();
 
-    void OnPlugConnected(int x, int y);
-    void OnPlugDisconnected(int x, int y);
+    void OnConnectionChanged(int plugA, int plugB, bool isConnected);
 
     unsigned long GetGameTime() { return millis() - _gameStartMillis; }
 
 private:
 
-    struct EstablishedConnection
+    struct ConnectionInfo
     {
         int plugA;
         int plugB;
+
+        unsigned long waitTimeRemaining;
+        unsigned long timeRemaining;
+
+        RgbColor color;
 
         bool includesPlug(int p)
         {
@@ -42,6 +50,11 @@ private:
         }
     };
 
+    Game();
+    static Game* __instance;
+
+    void GenerateNewConnectionRequest();
+    bool IsPlugAlreadyInPlay(int plug);
 
     int _rows;
     int _columns;
@@ -49,9 +62,15 @@ private:
     unsigned long _gameStartMillis = 0;
 
     NeoPixelBusLg<NeoGrbFeature, Neo800KbpsMethod>* _strip = 0;
+    Patchboard* _patchboard = 0;
 
-    EstablishedConnection _connections[12];
-    int _connectionCount = 0;
+    ConnectionInfo _desiredConnections[MAX_CONNECTIONS];
+    int _desiredConnectionCount = 0;
 
+    unsigned long _newConnectionDelay = 0;
+    unsigned long _lastUpdateMillis = 0;
 
+    CircularBuffer<RgbColor> _colors;
+
+    
 };

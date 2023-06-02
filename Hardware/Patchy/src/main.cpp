@@ -36,7 +36,6 @@ Patchboard patchboard(PLUG_COUNT);
 
 Adafruit_MCP23X08 mcp[PLUG_COUNT / 8];
 NeoPixelBusLg<NeoGrbFeature, Neo800KbpsMethod> strip(PANEL_COLUMNS * PANEL_ROWS, LED_PIN);
-Game game(PANEL_ROWS, PANEL_COLUMNS, strip);
 
 void updateInput()
 {
@@ -90,34 +89,34 @@ void updateInput()
 }
 
 
-void onConnectionChanged(int plugA, int plugB, bool isConnected)
-{
-    Serial.print("Plug ");
-    Serial.print(plugA);
+// void onConnectionChanged(int plugA, int plugB, bool isConnected)
+// {
+//     Serial.print("Plug ");
+//     Serial.print(plugA);
 
-    if(isConnected)
-    {
-        Serial.print(" CONNECTED to plug ");
-    }
-    else
-    {
-        Serial.print(" DISCONNECTED from plug ");
-    }
+//     if(isConnected)
+//     {
+//         Serial.print(" CONNECTED to plug ");
+//     }
+//     else
+//     {
+//         Serial.print(" DISCONNECTED from plug ");
+//     }
 
-    Serial.println(plugB);
+//     Serial.println(plugB);
 
-    int x = (plugA % PANEL_COLUMNS);
-    int y = (plugA / PANEL_COLUMNS);
+//     int x = (plugA % PANEL_COLUMNS);
+//     int y = (plugA / PANEL_COLUMNS);
 
-    if(isConnected)
-    {
-        game.OnPlugConnected(x, y);
-    }
-    else
-    {
-        game.OnPlugDisconnected(x, y);
-    }    
-}
+//     if(isConnected)
+//     {
+//         game.OnPlugConnected(x, y);
+//     }
+//     else
+//     {
+//         game.OnPlugDisconnected(x, y);
+//     }    
+// }
 
 void setup() 
 {
@@ -152,14 +151,15 @@ void setup()
         mcp[i/8].pinMode(i%8, INPUT_PULLUP);
     }
 
-    patchboard.SetConnectionCallback(onConnectionChanged);
+    //patchboard.SetConnectionCallback(onConnectionChanged);
     
-   game.Initialize();
+    Game::GetInstance()->Initialize(PANEL_ROWS, PANEL_COLUMNS, strip, patchboard);
+    Game::GetInstance()->BeginGame();
 }
 
 void loop() 
 {
     updateInput();
     patchboard.Update();
-    game.Update();
+    Game::GetInstance()->Update();
 }

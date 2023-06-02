@@ -17,6 +17,10 @@ public:
 
     int GetConnectedPlug(int plug);
     bool IsConnected(int plugA, int plugB);
+    bool isPlugOccupied(int plug);
+
+    bool isAnyPlugUnoccupied() { return _connectionCount < _plugCount/2; }
+    int GetPlugCount() { return _plugCount; }
 
     void Update();
 

@@ -180,3 +180,8 @@ bool Patchboard::IsConnected(int plugA, int plugB)
 {
     return GetConnectedPlug(plugA) == plugB;
 }
+
+bool Patchboard::isPlugOccupied(int plug)
+{
+    return GetConnectedPlug(plug) >= 0;
+}
