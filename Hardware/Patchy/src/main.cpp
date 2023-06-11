@@ -28,14 +28,14 @@
 #define PLUG_COUNT          32   // Total number of plugs
 
 #define PANEL_COLUMNS 6
-#define PANEL_ROWS 3
+#define PANEL_ROWS 5
 
 unsigned int currentPlug = 0;
 
 Patchboard patchboard(PLUG_COUNT);
 
 Adafruit_MCP23X08 mcp[PLUG_COUNT / 8];
-NeoPixelBusLg<NeoGrbFeature, Neo800KbpsMethod> strip(PANEL_COLUMNS * PANEL_ROWS, LED_PIN);
+NeoPixelBusLg<NeoRgbFeature, Neo800KbpsMethod> strip(PANEL_COLUMNS * PANEL_ROWS, LED_PIN);
 
 void updateInput()
 {
@@ -151,15 +151,19 @@ void setup()
         mcp[i/8].pinMode(i%8, INPUT_PULLUP);
     }
 
-    //patchboard.SetConnectionCallback(onConnectionChanged);
-    
-    Game::GetInstance()->Initialize(PANEL_ROWS, PANEL_COLUMNS, strip, patchboard);
+
+    Serial.println("Beginning game...");
+    Game::GetInstance()->Initialize(PANEL_ROWS, PANEL_COLUMNS, &strip, &patchboard);
     Game::GetInstance()->BeginGame();
+
 }
 
 void loop() 
 {
+
     updateInput();
     patchboard.Update();
     Game::GetInstance()->Update();
+
+    // delay(100000);
 }

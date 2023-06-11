@@ -6,14 +6,14 @@
 
 #include "Patchboard.h"
 
-#define MAX_CONNECTIONS 12
+#define MAX_CONNECTIONS 6
 
 class Game
 {
 public:
     static Game* GetInstance();
 
-    void Initialize(int rows, int columns, NeoPixelBusLg<NeoGrbFeature, Neo800KbpsMethod> strip, Patchboard patchboard);
+    void Initialize(int rows, int columns, NeoPixelBusLg<NeoRgbFeature, Neo800KbpsMethod> *strip, Patchboard *patchboard);
     void Update();
 
     void BeginGame();
@@ -34,6 +34,8 @@ private:
 
         RgbColor color;
 
+        bool isConnected;
+
         bool includesPlug(int p)
         {
             return plugA == p || plugB == p;
@@ -51,9 +53,9 @@ private:
     };
 
     Game();
-    static Game* __instance;
+    static Game *__instance;
 
-    void GenerateNewConnectionRequest();
+    void GenerateNewConnectionRequest(int include, int exclude);
     bool IsPlugAlreadyInPlay(int plug);
 
     int _rows;
@@ -61,14 +63,31 @@ private:
 
     unsigned long _gameStartMillis = 0;
 
-    NeoPixelBusLg<NeoGrbFeature, Neo800KbpsMethod>* _strip = 0;
+    NeoPixelBusLg<NeoRgbFeature, Neo800KbpsMethod>* _strip = 0;
     Patchboard* _patchboard = 0;
 
     ConnectionInfo _desiredConnections[MAX_CONNECTIONS];
-    int _desiredConnectionCount = 0;
+    unsigned int _desiredConnectionCount = 0;
 
     unsigned long _newConnectionDelay = 0;
     unsigned long _lastUpdateMillis = 0;
+
+    unsigned long _flashStartTime = 0;
+    RgbColor _flashColor;
+
+    int GetXCoordinate(int index) { return GetYCoordinate(index) % 2 == 0 ? index % _columns : (_columns - 1) - (index % _columns) ; };
+    int GetYCoordinate(int index) { return index / _columns; };
+    int GetIndex(int x, int y) 
+    { 
+        if(y % 2 == 0)
+        {
+            return y * _columns + x;
+        }
+        else
+        {
+            return y * _columns + ((_columns-1) - x);
+        }
+    }
 
     CircularBuffer<RgbColor> _colors;
 

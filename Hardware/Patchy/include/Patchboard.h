@@ -44,7 +44,6 @@ private:
             return includesPlug(p1) || includesPlug(p2);
         }
 
-
         bool connectsBothPlugs(int p1, int p2)
         {
             return (plugA == p1 && plugB == p2) || (plugA == p2 && plugB == p1);

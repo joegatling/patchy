@@ -10,13 +10,13 @@ class CircularBuffer
 public:
     CircularBuffer(int capacity);
 
-    void Add(const T& value);
-    void UpdateLast(const T& value);
+    void Add(const T value);
+    void UpdateLast(const T value);
     T Get(int index);
     T Last();
 
     T Dequeue();
-    void Enqueue(T& value);
+    void Enqueue(T value);
 
     void Clear();
 
@@ -25,7 +25,7 @@ public:
 
     void OutputToSerial();
 
-    T& operator[](int index);
+    T operator[](int index);
 
     //Helper functions for comparability checks
     //template <typename U = T>
@@ -55,7 +55,7 @@ CircularBuffer<T>::CircularBuffer(int capacity)
 }
 
 template <typename T>
-void CircularBuffer<T>::Add(const T& value)
+void CircularBuffer<T>::Add(const T value)
 {
     if (_count < _capacity)
     {
@@ -67,7 +67,7 @@ void CircularBuffer<T>::Add(const T& value)
 }
 
 template <typename T>
-void CircularBuffer<T>::UpdateLast(const T& value)
+void CircularBuffer<T>::UpdateLast(const T value)
 {
     if (_count > 0)
     {
@@ -113,7 +113,7 @@ inline T CircularBuffer<T>::Dequeue()
 }
 
 template <typename T>
-inline void CircularBuffer<T>::Enqueue(T &value)
+inline void CircularBuffer<T>::Enqueue(T value)
 {
     Add(value);
 }
@@ -148,7 +148,7 @@ void CircularBuffer<T>::OutputToSerial()
 }
 
 template <typename T>
-T& CircularBuffer<T>::operator[](int index)
+T CircularBuffer<T>::operator[](int index)
 {
     if (index < 0 || index >= _count)
     {
